@@ -124,6 +124,7 @@ static bool IMG_InitJPG(void)
 
     return true;
 }
+
 #if 0
 void IMG_QuitJPG(void)
 {
@@ -342,10 +343,6 @@ static void output_no_message(j_common_ptr cinfo)
     /* do nothing */
     (void)cinfo;
 }
-
-#ifdef _MSC_VER
-#pragma warning(disable:4611)   /* warning C4611: interaction between '_setjmp' and C++ object destruction is non-portable */
-#endif
 
 struct loadjpeg_vars {
     SDL_Surface *surface;
