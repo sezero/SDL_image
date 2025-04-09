@@ -186,6 +186,7 @@ int IMG_InitPNG()
 
     return 0;
 }
+
 void IMG_QuitPNG()
 {
     if ( lib.loaded == 0 ) {
@@ -272,9 +273,6 @@ static void LIBPNG_LoadPNG_RW(SDL_RWops *src, struct loadpng_vars *vars)
      */
 
 #ifdef PNG_SETJMP_SUPPORTED
-#ifdef _MSC_VER
-#pragma warning(disable:4611)   /* warning C4611: interaction between '_setjmp' and C++ object destruction is non-portable */
-#endif
 #ifndef LIBPNG_VERSION_12
     if (setjmp(*lib.png_set_longjmp_fn(vars->png_ptr, longjmp, sizeof(jmp_buf))))
 #else
