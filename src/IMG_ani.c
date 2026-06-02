@@ -328,6 +328,9 @@ static bool ParseList(IMG_AnimationParseContext *parse, Uint32 size)
         return ParseFrameList(parse, size);
     } else {
         // Unknown list chunk, ignore it
+        if (SDL_SeekIO(src, size, SDL_IO_SEEK_CUR) < 0) {
+            return false;
+        }
         return true;
     }
 }
@@ -344,6 +347,9 @@ static bool ParseSequenceChunk(IMG_AnimationParseContext *parse, Uint32 size)
 
     if (!(anih->fl & ANI_FLAG_SEQUENCE)) {
         // The header says we don't use sequence data, ignore it
+        if (SDL_SeekIO(src, size, SDL_IO_SEEK_CUR) < 0) {
+            return false;
+        }
         return true;
     }
 
