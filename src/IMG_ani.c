@@ -417,7 +417,7 @@ bool IMG_CreateANIAnimationDecoder(IMG_AnimationDecoder *decoder, SDL_Properties
         Uint32 size;
         if (!SDL_ReadU32LE(decoder->src, &chunk) ||
             !SDL_ReadU32LE(decoder->src, &size)) {
-            goto done;
+            break;
         }
         offset += 8;
 
@@ -454,6 +454,12 @@ bool IMG_CreateANIAnimationDecoder(IMG_AnimationDecoder *decoder, SDL_Properties
             }
         }
         offset += size;
+    }
+
+    // Make sure we have a valid animation
+    if (!parse.has_anih) {
+        SDL_SetError("Incomplete ANI data");
+        goto done;
     }
 
     decoder->GetNextFrame = IMG_AnimationDecoderGetNextFrame_Internal;
