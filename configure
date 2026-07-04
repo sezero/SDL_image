@@ -1904,8 +1904,8 @@ fi
 
 # ac_fn_c_try_run LINENO
 # ----------------------
-# Try to link conftest.$ac_ext, and return whether this succeeded. Assumes
-# that executables *can* be run.
+# Try to run conftest.$ac_ext, and return whether this succeeded. Assumes that
+# executables *can* be run.
 ac_fn_c_try_run ()
 {
   as_lineno=${as_lineno-"$1"} as_lineno_stack=as_lineno_stack=$as_lineno_stack
@@ -2250,6 +2250,8 @@ done
 # WARNING: Use '\'' to represent an apostrophe within the trap.
 # WARNING: Do not start the trap code with a newline, due to a FreeBSD 4.0 bug.
 trap 'exit_status=$?
+  # Sanitize IFS.
+  IFS=" ""	$as_nl"
   # Save into config.log some information that might help in debugging.
   {
     echo
@@ -3106,6 +3108,8 @@ int
 main ()
 {
 FILE *f = fopen ("conftest.out", "w");
+ if (!f)
+  return 1;
  return ferror (f) || fclose (f) != 0;
 
   ;
@@ -3117,7 +3121,9 @@ ac_clean_files="$ac_clean_files conftest.out"
 # the compiler is broken, or we cross compile.
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we are cross compiling" >&5
 $as_echo_n "checking whether we are cross compiling... " >&6; }
-if test "$cross_compiling" != yes; then
+if test "$cross_compiling" = maybe && test "x$build" != "x$host"; then
+  cross_compiling=yes
+elif test "$cross_compiling" != yes; then
   { { ac_try="$ac_link"
 case "(($ac_try" in
   *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
@@ -4004,13 +4010,13 @@ if ${lt_cv_nm_interface+:} false; then :
 else
   lt_cv_nm_interface="BSD nm"
   echo "int some_variable = 0;" > conftest.$ac_ext
-  (eval echo "\"\$as_me:4007: $ac_compile\"" >&5)
+  (eval echo "\"\$as_me:4013: $ac_compile\"" >&5)
   (eval "$ac_compile" 2>conftest.err)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:4010: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
+  (eval echo "\"\$as_me:4016: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
   (eval "$NM \"conftest.$ac_objext\"" 2>conftest.err > conftest.out)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:4013: output\"" >&5)
+  (eval echo "\"\$as_me:4019: output\"" >&5)
   cat conftest.out >&5
   if $GREP 'External.*some_variable' conftest.out > /dev/null; then
     lt_cv_nm_interface="MS dumpbin"
@@ -5221,7 +5227,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 5224 "configure"' > conftest.$ac_ext
+  echo '#line 5230 "configure"' > conftest.$ac_ext
   if { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_compile\""; } >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -7051,11 +7057,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7054: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7060: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:7058: \$? = $ac_status" >&5
+   echo "$as_me:7064: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -7390,11 +7396,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7393: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7399: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:7397: \$? = $ac_status" >&5
+   echo "$as_me:7403: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -7495,11 +7501,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7498: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7504: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:7502: \$? = $ac_status" >&5
+   echo "$as_me:7508: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -7550,11 +7556,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7553: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7559: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:7557: \$? = $ac_status" >&5
+   echo "$as_me:7563: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -9912,7 +9918,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 9915 "configure"
+#line 9921 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -10008,7 +10014,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 10011 "configure"
+#line 10017 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -10838,8 +10844,8 @@ $as_echo_n "checking how to create a ustar tar archive... " >&6; }
     case $_am_tool in
     gnutar)
       for _am_tar in tar gnutar gtar; do
-        { echo "$as_me:$LINENO: $_am_tar --version" >&5
-   ($_am_tar --version) >&5 2>&5
+        { echo "$as_me:$LINENO: $_am_tar --version | grep GNU >/dev/null" >&5
+   ($_am_tar --version | grep GNU >/dev/null) >&5 2>&5
    ac_status=$?
    echo "$as_me:$LINENO: \$? = $ac_status" >&5
    (exit $ac_status); } && break
@@ -10851,7 +10857,7 @@ $as_echo_n "checking how to create a ustar tar archive... " >&6; }
     plaintar)
       # Must skip GNU tar: if it does not support --format= it doesn't create
       # ustar tarball either.
-      (tar --version) >/dev/null 2>&1 && continue
+      (tar --version | grep GNU) >/dev/null 2>&1 && continue
       am__tar='tar cf - "$$tardir"'
       am__tar_='tar cf - "$tardir"'
       am__untar='tar xf -'
@@ -13560,7 +13566,7 @@ if test "x$ac_cv_header_webp_decode_h" = xyes; then :
 fi
 
 
-        as_ac_Lib=`$as_echo "ac_cv_lib_$webplib''_WebPGetDecoderVersion" | $as_tr_sh`
+        as_ac_Lib=`$as_echo "ac_cv_lib_$webplib""_WebPGetDecoderVersion" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for WebPGetDecoderVersion in -l$webplib" >&5
 $as_echo_n "checking for WebPGetDecoderVersion in -l$webplib... " >&6; }
 if eval \${$as_ac_Lib+:} false; then :
@@ -13618,7 +13624,7 @@ if test "x$ac_cv_header_webp_decode_h" = xyes; then :
 fi
 
 
-        as_ac_Lib=`$as_echo "ac_cv_lib_$webplib''_WebPGetDecoderVersion" | $as_tr_sh`
+        as_ac_Lib=`$as_echo "ac_cv_lib_$webplib""_WebPGetDecoderVersion" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for WebPGetDecoderVersion in -l$webplib" >&5
 $as_echo_n "checking for WebPGetDecoderVersion in -l$webplib... " >&6; }
 if eval \${$as_ac_Lib+:} false; then :
